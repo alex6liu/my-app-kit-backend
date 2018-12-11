@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
-require('mongoose-type-email');
 
 const bookstoreSchema = mongoose.Schema({
-  id: {
-    type: Number,
+  name: {
+    type: String,
     required: true,
   },
-  name: {
+  author: {
     type: String,
     required: true,
   },

@@ -36,9 +36,9 @@ router.post('/',[
     if (err) {
       res.status(404).send(err);
     } else {
-      let todolist = new Todolist();
-      todolist.id = todolists.length + 1;
+      let todolist = new Todolist();    
       todolist.name = req.body.name;
+      todolist.createTime = req.body.createTime;
 
       todolist.save((err) => {
         if (err) {
@@ -52,27 +52,38 @@ router.post('/',[
 });
 
 router.get('/:id', (req, res) => {
-  Todolist.find({"id": parseInt(req.params.id)}, (err, todolist) => {
+  Todolist.findById(req.params.id, (err, todolist) => {
+    console.log(req.params.id)
     if (err) {
       res.status(404).send(err);
     } else {
-      res.status(200).send(todolist[0]);
+      res.status(200).send(todolist);
     }
   });
 });
 
 router.put('/:id', (req, res) => {
-  Todolist.find({"id":parseInt(req.params.id)}, (err, todolist) => {
+  Todolist.findById(req.params.id, (err, todolist) => {
     if (err) {
       res.status(404).send(err);
     } else {
-      todolist.name = req.body.name;
+      if (req.body.name) {
+        todolist.name = req.body.name;
+      }
+
+      if (req.body.createTime) {
+        todolist.createTime = req.body.createTime;
+      }
+
+      if (req.body.completed) {
+        todolist.completed = req.body.completed;
+      }
 
       Todolist.update({}, todolist, (err) => {
         if (err) {
           res.status(404).send(err);
         } else {
-          Todolist.find({'id':parseInt(req.params.id)}, (err, todolist) => {
+          Todolist.findById(req.params.id, (err, todolist) => {
             res.status(200).send(todolist);
           });
         }
@@ -82,11 +93,11 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  Todolist.find({"id":parseInt(req.params.id)}, (err, todolist) => {
+  Todolist.findById(req.params.id, (err, todolist) => {
     if (err) {
       res.status(404).send(err);
     } else {
-      Todolist.deleteOne(todolist[0], (err) => {
+      Todolist.deleteOne(todolist, (err) => {
         if (err) {
           res.status(404).send(err);
         } else {

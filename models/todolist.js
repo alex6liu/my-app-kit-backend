@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
-require('mongoose-type-email');
 
 const todolistSchema = mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   name: {
     type: String,
+    required: true,
+  },
+  createTime: {
+    type: String,
+    required: true,
+  },
+  completed: {
+    type: Boolean,
     required: true,
   },
 });

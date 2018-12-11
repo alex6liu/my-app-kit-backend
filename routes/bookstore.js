@@ -31,8 +31,8 @@ router.post('/', (req, res, next) => {
       res.status(404).send(err);
     } else {
       let book = new Bookstore();
-      book.id = books.length + 1;
       book.name = req.body.name;
+      book.author = req.body.author;
       book.have = req.body.have;
       book.read = req.body.read;
       book.tags = req.body.tags;
@@ -49,22 +49,25 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res) => {
-  Bookstore.find({"id": parseInt(req.params.id)}, (err, book) => {
+  Bookstore.findById(req.params.id, (err, book) => {
     if (err) {
       res.status(404).send(err);
     } else {
-      res.status(200).send(book[0]);
+      res.status(200).send(book);
     }
   });
 });
 
 router.put('/:id', (req, res) => {
-  Bookstore.find({"id":parseInt(req.params.id)}, (err, book) => {
+  Bookstore.findById(req.params.id, (err, book) => {
     if (err) {
       res.status(404).send(err);
     } else {
       if (req.body.name) {
         book.name = req.body.name;
+      }
+      if (req.body.author) {
+        book.author = req.body.author;
       }
       if (req.body.have) {
         book.have = req.body.have;
@@ -80,7 +83,7 @@ router.put('/:id', (req, res) => {
         if (err) {
           res.status(404).send(err);
         } else {
-          Bookstore.find({'id':parseInt(req.params.id)}, (err, book) => {
+          Bookstore.findById(req.params.id, (err, book) => {
             res.status(200).send(book);
           });
         }
@@ -90,11 +93,11 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  Bookstore.find({"id":parseInt(req.params.id)}, (err, book) => {
+  Bookstore.findById(req.params.id, (err, book) => {
     if (err) {
       res.status(404).send(err);
     } else {
-      Bookstore.deleteOne(book[0], (err) => {
+      Bookstore.deleteOne(book, (err) => {
         if (err) {
           res.status(404).send(err);
         } else {

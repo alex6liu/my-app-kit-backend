@@ -59,27 +59,29 @@ router.get('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  Bookstore.findById(req.params.id, (err, book) => {
+  Bookstore.findById(req.params.id, (err, book1) => {
     if (err) {
       res.status(404).send(err);
     } else {
+      const book = {};
       if (req.body.name) {
         book.name = req.body.name;
       }
       if (req.body.author) {
         book.author = req.body.author;
       }
-      if (req.body.have) {
+      if (req.body.have !== undefined) {
         book.have = req.body.have;
       }
-      if (req.body.read) {
+      if (req.body.read !== undefined) {
         book.read = req.body.read;
-      }
+      } 
+
       if (req.body.tags) {
         book.tags = req.body.tags;
       }
 
-      Bookstore.update({}, book, (err) => {
+      Bookstore.update({"_id":req.params.id}, book, (err) => {
         if (err) {
           res.status(404).send(err);
         } else {

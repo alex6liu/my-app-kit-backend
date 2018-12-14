@@ -22,6 +22,16 @@ router.get('/', (req, res, next) => {
       res.status(200).send(books);
     }
   });
+
+  if (req.body.tags) {
+    Bookstore.find({tags:tags}, (err, books) => {
+      if (err) {
+        res.status(404).send(err);
+      } else {
+        res.status(200).send(books);
+      }
+    });
+  }
 });
 
 router.post('/', (req, res, next) => {
@@ -45,6 +55,45 @@ router.post('/', (req, res, next) => {
         }
       });
     }
+  });
+});
+
+router.get('/have', (req, res) => {
+  Bookstore.find({have: true}, (err, books) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send({have: books.length});
+    } 
+  })
+});
+router.get('/read', (req, res) => {
+  Bookstore.find({read: true}, (err, books) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send({read: books.length});
+    } 
+  })
+});
+
+router.get('/tags/:tag', (req, res) => {
+  const tagKey = req.params.tag;
+  const tagMap = {
+    history: '历史',
+    eco: '经济',
+    cs: '计算机',
+    novel: '小说',
+    literture: '文学',
+  }
+  const tag = tagMap[tagKey];
+
+  Bookstore.find({tags: tag }, (err, books) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send({[tagKey]: books.length});
+    } 
   });
 });
 

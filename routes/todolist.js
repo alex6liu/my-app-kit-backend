@@ -39,6 +39,7 @@ router.post('/',[
       let todolist = new Todolist();    
       todolist.name = req.body.name;
       todolist.createTime = req.body.createTime;
+      todolist.completed = req.body.completed;
 
       todolist.save((err) => {
         if (err) {
@@ -63,10 +64,11 @@ router.get('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  Todolist.findById(req.params.id, (err, todolist) => {
+  Todolist.findById(req.params.id, (err, todolist1) => {
     if (err) {
       res.status(404).send(err);
     } else {
+      const todolist = {};
       if (req.body.name) {
         todolist.name = req.body.name;
       }
@@ -75,11 +77,11 @@ router.put('/:id', (req, res) => {
         todolist.createTime = req.body.createTime;
       }
 
-      if (req.body.completed) {
+      if (req.body.completed !== undefined) {
         todolist.completed = req.body.completed;
       }
 
-      Todolist.update({}, todolist, (err) => {
+      Todolist.update({"_id": req.params.id}, todolist, (err) => {
         if (err) {
           res.status(404).send(err);
         } else {

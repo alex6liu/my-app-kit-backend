@@ -17,6 +17,14 @@ const bookstoreSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  normalPrice: {
+    type: Number,
+    required: true,
+  },
+  buyPrice: {
+    type: Number,
+    required: true,
+  },
   tags: {
     type: Array,
     required: true,

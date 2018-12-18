@@ -46,6 +46,8 @@ router.post('/', (req, res, next) => {
       book.author = req.body.author;
       book.have = req.body.have;
       book.read = req.body.read;
+      book.normalPrice = parseFloat(req.body.normalPrice);
+      book.buyPrice = parseFloat(req.body.buyPrice);
       book.tags = req.body.tags;
 
       book.save((err) => {
@@ -129,6 +131,12 @@ router.put('/:id', (req, res) => {
 
       if (req.body.tags) {
         book.tags = req.body.tags;
+      }
+      if (req.body.normalPrice) {
+        book.normalPrice = parseFloat(req.body.normalPrice);
+      }
+      if (req.body.buyPrice) {
+        book.buyPrice = parseFloat(req.body.buyPrice);
       }
 
       Bookstore.update({"_id":req.params.id}, book, (err) => {

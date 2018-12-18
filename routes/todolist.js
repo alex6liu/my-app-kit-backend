@@ -24,9 +24,7 @@ router.get('/', (req, res, next) => {
   });
 });
 
-router.post('/',[
-  check('name').isAlpha(),
-], (req, res, next) => {
+router.post('/', (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });

@@ -3,8 +3,9 @@ var router = express.Router();
 const Bookstore = require('../models/bookstore');
 const { check, validationResult } = require('express-validator/check');
 const mongoose = require('mongoose');
+const mongoAltasPassword = require('../password');
 
-mongoose.connect('mongodb://localhost/all_the_backend');
+mongoose.connect(`mongodb://tknnn:${mongoAltasPassword}@backend-api-shard-00-00-kxfgn.mongodb.net:27017,backend-api-shard-00-01-kxfgn.mongodb.net:27017,backend-api-shard-00-02-kxfgn.mongodb.net:27017/test?ssl=true&replicaSet=backend-api-shard-0&authSource=admin&retryWrites=true`);
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connect to db');

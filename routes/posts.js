@@ -3,7 +3,7 @@ var router = express.Router();
 const Post = require('../models/posts');
 const { check, validationResult } = require('express-validator/check');
 const mongoose = require('mongoose');
-const mongoAltasPassword = require('../password') && process.env.password;
+const mongoAltasPassword = process.env.password && require('../password');
 
 mongoose.connect(`mongodb://tknnn:${mongoAltasPassword}@backend-api-shard-00-00-kxfgn.mongodb.net:27017,backend-api-shard-00-01-kxfgn.mongodb.net:27017,backend-api-shard-00-02-kxfgn.mongodb.net:27017/test?ssl=true&replicaSet=backend-api-shard-0&authSource=admin&retryWrites=true`);
 const db = mongoose.connection;

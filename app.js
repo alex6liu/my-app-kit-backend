@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 const todolistRouter = require('./routes/todolist');
 const bookstoreRouter = require('./routes/bookstore');
 const shoppingcartRouter = require('./routes/shoppingcart');
+const postsRouter = require('./routes/posts');
 
 var app = express();
 
@@ -26,10 +27,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/todolist', todolistRouter);
-app.use('/bookstore', bookstoreRouter);
-app.use('/shoppingcart', shoppingcartRouter);
+app.use('/v1/self-backend/users', usersRouter);
+app.use('/v1/self-backend/todolist', todolistRouter);
+app.use('/v1/self-backend/bookstore', bookstoreRouter);
+app.use('/v1/self-backend/shoppingcart', shoppingcartRouter);
+app.use('/v1/blog/posts', postsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

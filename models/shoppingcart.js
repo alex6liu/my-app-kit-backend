@@ -2,22 +2,26 @@ const mongoose = require('mongoose');
 require('mongoose-type-email');
 
 const shoppingcartSchema = mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
   },
-  currPrice: {
+  currentPrice: {
     type: Number,
     required: true,
   },
   minPrice: {
     type: Number,
     required: true,
-  }
+  },
+  link: {
+    type: String,
+    required: true,
+  },
+  createTime: {
+    type: String,
+    required: true,
+  },
 });
 
-const Shoppingcart = module.exports = mongoose.model('Shoppingcart', userSchema);
+const Shoppingcart = module.exports = mongoose.model('Shoppingcart', shoppingcartSchema);
